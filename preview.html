@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Question importante</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font-family: Arial, sans-serif;
+
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    }
+
+    .box {
+      width: 500px;
+      max-width: 90%;
+      min-height: 250px;
+
+      background: white;
+
+      padding: 40px;
+
+      border-radius: 25px;
+
+      text-align: center;
+
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    h1 {
+      color: #222;
+      font-size: 30px;
+
+      margin-top: 0;
+      margin-bottom: 40px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      width: 100%;
+    }
+
+    button {
+      border: none;
+
+      padding: 15px 35px;
+
+      border-radius: 15px;
+
+      font-size: 20px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    #yes {
+      background: #2ecc71;
+      color: white;
+    }
+
+    #yes:hover {
+      transform: scale(1.1);
+    }
+
+    #no {
+      background: #e74c3c;
+      color: white;
+    }
+
+    #result {
+      display: none;
+
+      color: #222;
+
+      font-size: 32px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box" id="questionBox">
+
+    <h1>
+      Tu la vx dans les foufounes ce soir ? 😏
+    </h1>
+
+    <div class="buttons">
+
+      <button id="yes">
+        Oui 😏
+      </button>
+
+      <button id="no">
+        Non
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="box" id="result">
+    Je savais que tu dirais oui 😏❤️
+  </div>
+
+
+  <script>
+
+    const noButton = document.getElementById("no");
+    const yesButton = document.getElementById("yes");
+
+    const questionBox =
+      document.getElementById("questionBox");
+
+    const result =
+      document.getElementById("result");
+
+
+    function moveNoButton() {
+
+      // Le bouton devient flottant seulement
+      // lorsqu'il commence à fuir
+
+      noButton.style.position = "fixed";
+
+      const buttonWidth =
+        noButton.offsetWidth;
+
+      const buttonHeight =
+        noButton.offsetHeight;
+
+      const maxX =
+        window.innerWidth -
+        buttonWidth -
+        20;
+
+      const maxY =
+        window.innerHeight -
+        buttonHeight -
+        20;
+
+      const randomX =
+        20 + Math.random() * (maxX - 20);
+
+      const randomY =
+        20 + Math.random() * (maxY - 20);
+
+      noButton.style.left =
+        randomX + "px";
+
+      noButton.style.top =
+        randomY + "px";
+    }
+
+
+    document.addEventListener(
+      "mousemove",
+      function(event) {
+
+        const rect =
+          noButton.getBoundingClientRect();
+
+        const centerX =
+          rect.left +
+          rect.width / 2;
+
+        const centerY =
+          rect.top +
+          rect.height / 2;
+
+        const distanceX =
+          event.clientX -
+          centerX;
+
+        const distanceY =
+          event.clientY -
+          centerY;
+
+        const distance =
+          Math.sqrt(
+            distanceX * distanceX +
+            distanceY * distanceY
+          );
+
+
+        // Plus ce nombre est élevé,
+        // plus le bouton fuit tôt
+
+        if (distance < 150) {
+          moveNoButton();
+        }
+
+      }
+    );
+
+
+    noButton.addEventListener(
+      "mouseenter",
+      moveNoButton
+    );
+
+
+    yesButton.addEventListener(
+      "click",
+      function() {
+
+        questionBox.style.display =
+          "none";
+
+        noButton.style.display =
+          "none";
+
+        result.style.display =
+          "block";
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
